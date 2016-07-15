@@ -376,10 +376,11 @@ uis.controller('uiSelectCtrl',
 
       if (!item || !_isItemDisabled(item)) {
         // if click is made on existing item, prevent from tagging, ctrl.search does not matter
-        var manualSelection = false;
+        ctrl.clickTriggeredSelect = false;
         if($event && $event.type === 'click' && item)
-          manualSelection = true;
-        if(ctrl.tagging.isActivated && manualSelection === false) {
+          ctrl.clickTriggeredSelect = true;
+
+        if(ctrl.tagging.isActivated && ctrl.clickTriggeredSelect === false) {
           // if taggingLabel is disabled and item is undefined we pull from ctrl.search
           if ( ctrl.taggingLabel === false ) {
             if ( ctrl.activeIndex < 0 ) {
@@ -434,9 +435,6 @@ uis.controller('uiSelectCtrl',
 
         if (ctrl.closeOnSelect) {
           ctrl.close(skipFocusser);
-        }
-        if ($event && $event.type === 'click') {
-          ctrl.clickTriggeredSelect = true;
         }
       }
     }
